@@ -1,5 +1,5 @@
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QDialog, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox
+from PySide2.QtWidgets import QDialog, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox, QPlainTextEdit
 
 import widget.calendar
 import widget.funtion
@@ -41,9 +41,8 @@ class Edit(QWidget):
         self.edt_title.setText(title)
         self.edt_title.setGeometry(35, 10, 300, 30)
 
-        self.edt_contents = QLineEdit(self.dialog)
-        self.edt_contents.setAlignment(Qt.AlignLeft | Qt.AlignTop)
-        self.edt_contents.setText(contents)
+        self.edt_contents = QPlainTextEdit(self.dialog)
+        self.edt_contents.setPlainText(contents)
         self.edt_contents.setGeometry(35, 50, 300, 90)
 
         self.label_time_set = QLabel(self.dialog)
@@ -78,7 +77,7 @@ class Edit(QWidget):
             number = widget.funtion.Function.setting.number
             txt = open("C:/woo_project/todolist/widget/content.txt", 'r')
             title = self.edt_title.text()
-            contents = self.edt_contents.text()
+            contents = self.edt_contents.toPlainText()
             time = self.label_time_set.text()
 
             new_text_content = ''

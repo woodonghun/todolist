@@ -3,6 +3,9 @@ from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QWidget, QDialog, QPushButton, QAbstractItemView, QTableWidget, QTableWidgetItem, \
     QCheckBox
 
+import widget.funtion
+import widget.title_cont
+
 class Complete(QWidget):
     def __init__(self):
         super().__init__()
@@ -40,7 +43,7 @@ class Complete(QWidget):
 
         self.table.setGeometry(10, 10, 530, 200)
         self.table.setSelectionBehavior(QAbstractItemView.SelectRows)  # 열 선택
-        self.table.verticalHeader().setVisible(True)  # 행 해더 안보이게함
+        self.table.verticalHeader().setVisible(False)  # 행 해더 안보이게함
         self.table.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)  # 수정 불가능 하게 함
         self.table.setHorizontalHeaderLabels(["", "설정 일시", "완료일시", "제목"])
 
@@ -48,6 +51,8 @@ class Complete(QWidget):
         btn.setText('선택된 항목 삭제')
         btn.clicked.connect(self.delete)
         btn.move(170, 215)
+
+        self.table.doubleClicked.connect(self.content_widget)
 
         self.dialog.setWindowTitle('Todo list')
         self.dialog.setGeometry(500, 500, 550, 250)
@@ -102,7 +107,15 @@ class Complete(QWidget):
         self.content_chunk = [self.content_list[i * 4:(i + 1) * 4] for i in range((len(self.content_list) + 4 - 1) // 4)]
         txt.close()
 
-
+    def content_widget(self):
+        title_con = widget.title_cont.Title_Cont
+        function = widget.funtion.Function
+        aa = self.table.selectedIndexes()
+        function.setting.number = aa[0].row()
+        if self.table.rowCount() - 1 != aa[0].row():
+            title_con()
+        else:
+            pass
 
     def dialog_close(self):
         self.dialog.close()

@@ -1,7 +1,8 @@
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QDialog, QWidget, QPushButton, QLabel, QLineEdit
+from PySide2.QtWidgets import QDialog, QWidget, QLabel, QTextBrowser
 
 import widget.funtion
+
+
 class Title_Cont(QWidget):
 
     def __init__(self):
@@ -11,10 +12,8 @@ class Title_Cont(QWidget):
         self.dialog_close()
 
     def initUI(self):
-        self.update_todo()
-
         function = widget.funtion.Function
-        row = function.setting.number
+        row = function.setting.number  # 저장된 행 값 출력
 
         function.update_todo(self, 3)
 
@@ -26,10 +25,8 @@ class Title_Cont(QWidget):
                                 'border-color: #111111;')
         edt_title.setGeometry(35, 10, 300, 30)
 
-        edt_contents = QLabel(self.dialog)
-        edt_contents.setText(self.content_chunk[row][1])
-        edt_contents.setAlignment(Qt.AlignLeft | Qt.AlignTop)
-        edt_contents.setWordWrap(True)
+        edt_contents = QTextBrowser(self.dialog)  # QTextBrowser은 QTextEdit의 확장형 다양한 기능을 더 많이 활용 가능
+        edt_contents.append(self.content_chunk[row][1])
         edt_contents.setStyleSheet('background-color: white;'
                                    'border-style: solid;'
                                    'border-width: 1px;'
@@ -60,13 +57,6 @@ class Title_Cont(QWidget):
         self.dialog.setGeometry(600, 500, 350, 190)
 
         self.dialog.exec()
-
-    def update_todo(self):
-        txt = open("C:/woo_project/todolist/widget/content.txt", 'r')
-        self.content = txt.read()
-        self.content_list = self.content.split('\n')
-        self.content_chunk = [self.content_list[i * 3:(i + 1) * 3] for i in range((len(self.content_list) + 3 - 1) // 3)]
-        txt.close()
 
     def dialog_close(self):
         self.dialog.close()

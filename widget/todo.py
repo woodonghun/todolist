@@ -1,5 +1,5 @@
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QDialog, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox
+from PySide2.QtWidgets import QDialog, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox, QPlainTextEdit
 
 import widget.calendar
 import widget.main
@@ -23,7 +23,7 @@ class Todo(QWidget):
 
         btn_date = QPushButton(self.dialog)
         btn_date.setText("날짜시간 설정")
-        btn_date.clicked.connect(date)
+        btn_date.clicked.connect(date)      # 캘린더, 시간 모듈로 이동
         btn_date.clicked.connect(self.Time_change)
         btn_date.move(150, 180)
 
@@ -35,8 +35,7 @@ class Todo(QWidget):
         self.edt_title = QLineEdit(self.dialog)
         self.edt_title.setGeometry(35, 10, 300, 30)
 
-        self.edt_contents = QLineEdit(self.dialog)
-        self.edt_contents.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+        self.edt_contents = QPlainTextEdit(self.dialog)     # QPlainTextEdit은 QLineEdit과 다르게 스타일은 바꿀수 없지만 줄은 바꿀 수 있다.
         self.edt_contents.setGeometry(35, 50, 300, 90)
 
         self.label_time_set = QLabel(self.dialog)
@@ -60,23 +59,25 @@ class Todo(QWidget):
 
         self.dialog.exec()
 
+    # 시간 설정
     def Time_change(self):
         txt = open("C:/woo_project/todolist/widget/timedate.txt", 'r')
         self.dates = txt.read()
         txt.close()
         self.label_time_set.setText(self.dates)
 
+    # 저장 버튼 클릭
     def btn_clicked(self):
-        if self.edt_title.text() != '':
+        if self.edt_title.text() != '':     # 제목에 빈칸이 아닐 때
             txt = open("C:/woo_project/todolist/widget/content.txt", 'a')
             title = self.edt_title.text()
-            contents = self.edt_contents.text()
+            contents = self.edt_contents.toPlainText()
             daytime = self.dates
             todolist = title, contents, daytime
             txt.write('\n'.join(todolist)+'\n')
             txt.close()
             self.dialog_close()
-        else:
+        else:       # 제목에 빈칸일 때 메세지 박스 출력
             signBox = QMessageBox()
             signBox.setWindowTitle("Warning")
             signBox.setText('제목을 입력하세요')
