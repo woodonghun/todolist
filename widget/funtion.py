@@ -1,10 +1,10 @@
 class Function():
-    def update_todo(self):
-        txt = open("C:/woo_project/todolist/widget/content", 'r')
+    def update_todo(self, n):
+        txt = open("C:/woo_project/todolist/widget/content.txt", 'r')
         self.content = txt.read()
         self.content_list = self.content.split('\n')
-        self.content_chunk = [self.content_list[i * 3:(i + 1) * 3] for i in
-                                range((len(self.content_list) + 3 - 1) // 3)]
+        self.content_chunk = [self.content_list[i * n:(i + 1) * n] for i in
+                                range((len(self.content_list) + n - 1) // n)]
         txt.close()
 
     def change_content(self, i):

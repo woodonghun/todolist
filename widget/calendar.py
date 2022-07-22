@@ -53,7 +53,7 @@ class Calendar(QWidget):
     def btn_clicked(self):
         cal_date = self.cal.selectedDate()
         self.strDate = cal_date.toString('yyyy-MM-dd')
-        txt = open("C:/woo_project/todolist/widget/timedate", 'w')
+        txt = open("C:/woo_project/todolist/widget/timedate.txt", 'w')
         day = self.strDate
         time = self.timeedit.text()
         self.dates = day+' '+time
