@@ -26,7 +26,7 @@ class Title_Cont(QWidget):
         edt_title.setGeometry(35, 10, 300, 30)
 
         edt_contents = QTextBrowser(self.dialog)  # QTextBrowser은 QTextEdit의 확장형 다양한 기능을 더 많이 활용 가능
-        edt_contents.append(self.content_chunk[row][1])
+        edt_contents.append(self.content_chunk[row][1])     # ui 이쁘게 안하면 더 많이 사용할 것 같음
         edt_contents.setStyleSheet('background-color: white;'
                                    'border-style: solid;'
                                    'border-width: 1px;'

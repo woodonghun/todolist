@@ -80,7 +80,6 @@ class Complete(QWidget):
                     new_text_content += new_string + '\n'
                 else:
                     new_text_content += ''
-            print(self.row_list[p])
             self.table.removeRow(self.row_list[p])
             txt.close()
 

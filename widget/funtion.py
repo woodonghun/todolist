@@ -7,12 +7,6 @@ class Function():
                                 range((len(self.content_list) + n - 1) // n)]
         txt.close()
 
-    def change_content(self, i):
-        self.update_todo()
-        self.dates = self.content_chunk[i][2]
-        self.title = self.content_chunk[i][0]
-        self.contents = self.content_chunk[i][1]
-
     def setting(self):
         global number
         number = 0

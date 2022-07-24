@@ -24,6 +24,8 @@ class Main(QWidget):
     def initUI(self):
         txt = open("C:/woo_project/todolist/widget/content.txt", 'r')
         self.value = txt.read()
+        txt.close()
+
         self.row_list = []      # 초기 리스트 행 값 저장
         todo = widget.todo.Todo
         edit = widget.edit.Edit
@@ -90,7 +92,7 @@ class Main(QWidget):
         self.setGeometry(500, 300, 550, 450)
         self.show()
     
-    # 사용하진 않지만 현재 클릭되어있는 행열 값 표시함
+    # 사용 하진 않지만 현재 클릭 되어 있는 행열 값 표시함
     def current(self):
         aa = self.table.selectedIndexes()
         cell = set((idx.row(), idx.column()) for idx in aa)
@@ -98,7 +100,7 @@ class Main(QWidget):
         txt1 = "selected cells ; {0}".format(cell)
         msg = QMessageBox.information(self, 'selectedIndexes()...', txt1)
 
-    # 체크박스 변환 되었을 떄 리스트 에 저장함
+    # 체크 박스 변환 되었을 떄 리스트 에 저장함
     def cb_change(self, state):
 
         if state == Qt.Checked:     # 체크 되면 추가
@@ -107,7 +109,6 @@ class Main(QWidget):
             self.row_list.remove(self.table.currentRow())
         self.row_list.sort()
         self.row_list.reverse()     # 정렬 후 reverse 삭제할 때 순서가 섞여있으면 오류 발생 뒤에서 부터 제거해야 꼬이지않음
-        print(self.row_list)
 
     # 삭제
     def delete(self):       
@@ -130,7 +131,6 @@ class Main(QWidget):
                     new_text_content += new_string + '\n'
                 else:
                     new_text_content += ''
-            print(self.row_list[p])
             self.table.removeRow(self.row_list[p])
             txt.close()
 
@@ -150,7 +150,6 @@ class Main(QWidget):
         for j in self.row_list:
             for i in range(3):
                 txt.write(''.join(self.content_chunk[j][i]) + '\n')
-                print(self.content_chunk[j][i])
             txt.write(''.join(self.dates) + '\n')
         txt.close()
         self.row_list.reverse()
@@ -209,12 +208,10 @@ class Main(QWidget):
 
             self.table.setRowCount(self.table.rowCount() + 1)
 
-            cb.stateChanged.connect(self.cb_change)     # 추가된 cb, btn 클릭 되면 이벤트 발생 하도록 추가
+            cb.stateChanged.connect(self.cb_change)     # 추가된 cb, btn 클릭 되면 이벤트 발생
             btn.clicked.connect(self.check)
             btn.clicked.connect(edit)
             btn.clicked.connect(self.edit_content)
-
-            print(self.table.rowCount())
 
 
 if __name__ == '__main__':

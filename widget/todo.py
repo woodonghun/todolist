@@ -36,7 +36,7 @@ class Todo(QWidget):
         self.edt_title.setGeometry(35, 10, 300, 30)
 
         self.edt_contents = QPlainTextEdit(self.dialog)     # QPlainTextEdit은 QLineEdit과 다르게 스타일은 바꿀수 없지만 줄은 바꿀 수 있다.
-        self.edt_contents.setGeometry(35, 50, 300, 90)
+        self.edt_contents.setGeometry(35, 50, 300, 90)      # ui 이쁘게 안하면 더 많이 사용할 것 같음
 
         self.label_time_set = QLabel(self.dialog)
         self.label_time_set.setText(self.dates)
@@ -55,7 +55,7 @@ class Todo(QWidget):
         self.label_time.move(10, 150)
 
         self.dialog.setWindowTitle('todo')
-        self.dialog.setGeometry(300, 350, 350, 250)
+        self.dialog.setGeometry(300, 350, 350, 230)
 
         self.dialog.exec()
 
@@ -77,7 +77,7 @@ class Todo(QWidget):
             txt.write('\n'.join(todolist)+'\n')
             txt.close()
             self.dialog_close()
-        else:       # 제목에 빈칸일 때 메세지 박스 출력
+        else:       # 제목에 빈칸일 때 메세지 박스 출력, 내용 없이 제목만 쓸 수 있을거라 생각해서 제목만~
             signBox = QMessageBox()
             signBox.setWindowTitle("Warning")
             signBox.setText('제목을 입력하세요')
