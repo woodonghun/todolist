@@ -51,7 +51,7 @@ class Complete(QWidget):
 
         self.table.doubleClicked.connect(self.content_widget)
 
-        self.dialog.setWindowTitle('Todo list')
+        self.dialog.setWindowTitle('완료 내용')
         self.dialog.setGeometry(500, 500, 550, 250)
         self.dialog.exec()
 

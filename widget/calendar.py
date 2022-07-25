@@ -27,6 +27,7 @@ class Calendar(QWidget):
 
         self.cal = QCalendarWidget(self.dialog)
         self.cal.setGridVisible(True)
+        self.cal.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader)      # 열 해더 라벨 지움
         self.cal.selectionChanged.connect(self.showDate)
 
         self.lbl = QLabel(self.dialog)

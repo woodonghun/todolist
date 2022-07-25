@@ -54,7 +54,7 @@ class Todo(QWidget):
         self.label_time.setText('일시')
         self.label_time.move(10, 150)
 
-        self.dialog.setWindowTitle('todo')
+        self.dialog.setWindowTitle('할일 추가')
         self.dialog.setGeometry(300, 350, 350, 230)
 
         self.dialog.exec()

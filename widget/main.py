@@ -20,19 +20,17 @@ class Main(QWidget):
         self.initUI()
 
     def initUI(self):
+        todo = widget.todo.Todo
+        edit = widget.todo.Edit
+        complete = widget.complete.Complete
         function = widget.funtion.Function
         function.update_todo(self, 3)
 
-        txt = open("C:/woo_project/todolist/widget/content.txt", 'r')
+        txt = open("C:/woo_project/todolist/widget/content.txt", 'r')       # 처음 작성된 값 불러옴
         self.value = txt.read()
         txt.close()
 
         self.row_list = []      # 초기 리스트 행 값 저장
-        todo = widget.todo.Todo
-        edit = widget.todo.Edit
-        complete = widget.complete.Complete
-
-        # main UI
         self.table = QTableWidget(len(self.content_chunk), 4, self)     # table 설정
 
         self.table.resizeRowsToContents()       # 사이즈 조절
@@ -85,7 +83,7 @@ class Main(QWidget):
 
         self.table.setGeometry(10, 70, 530, 300)
         self.table.setSelectionBehavior(QAbstractItemView.SelectRows)   # 열 선택
-        self.table.verticalHeader().setVisible(False)       # 행 해더 안보이게함
+        self.table.verticalHeader().setVisible(False)       # 행 해더 라벨 안보이게함
         self.table.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)   # 수정 불가능 하게 함
         self.table.setHorizontalHeaderLabels(["", "일시", "제목", ""])
 
@@ -115,6 +113,7 @@ class Main(QWidget):
     # 삭제
     def delete(self):       
         new_text_content = ''
+        function = widget.funtion.Function
 
         for p in range(len(self.row_list)):
 
@@ -140,7 +139,7 @@ class Main(QWidget):
             txt.write(new_text_content)
             txt.close()
             new_text_content = ''
-            self.update_todo()
+            function.update_todo(self, 3)
 
         self.row_list = []
         # 참고 https://zephyrus1111.tistory.com/106
@@ -148,7 +147,8 @@ class Main(QWidget):
     # 완료
     def complete(self):
         self.row_list.reverse()     # 정렬된 리스트 값 다시 reverse 해서 순서대로 정렬
-        self.update_todo()
+        function = widget.funtion.Function
+        function.update_todo(self, 3)
         txt = open("C:/woo_project/todolist/widget/finish.txt", 'a')
         for j in self.row_list:
             for i in range(3):
@@ -191,7 +191,7 @@ class Main(QWidget):
 
     # 추가
     def add_content(self):      # 내용 추가, 버튼 추가, 줄 추가,
-        edit = widget.edit.Edit
+        edit = widget.todo.Edit
         function = widget.funtion.Function
         function.update_todo(self, 3)
 

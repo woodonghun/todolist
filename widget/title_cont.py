@@ -52,7 +52,7 @@ class Title_Cont(QWidget):
         label_time.setText('일시')
         label_time.move(5, 155)
 
-        self.dialog.setWindowTitle('todo')
+        self.dialog.setWindowTitle('내용 확인')
         self.dialog.setGeometry(600, 500, 350, 190)
 
         self.dialog.exec()
