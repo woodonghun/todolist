@@ -107,6 +107,7 @@ class Main(QWidget):
             self.row_list.append(self.table.currentRow())
         else:                       # 체크 해제 되면 제거
             self.row_list.remove(self.table.currentRow())
+        # print(self.row_list) 확인
         self.row_list.sort()
         self.row_list.reverse()     # 정렬 후 reverse 삭제할 때 순서가 섞여있으면 오류 발생 뒤에서 부터 제거해야 꼬이지않음
 
@@ -121,9 +122,9 @@ class Main(QWidget):
             for i, l in enumerate(lines):
                 if i == self.row_list[p] * 3:
                     new_string = ''
-                elif i == self.row_list[p] * 3 + 2:
-                    new_string = ''
                 elif i == self.row_list[p] * 3 + 1:
+                    new_string = ''
+                elif i == self.row_list[p] * 3 + 2:
                     new_string = ''
                 else:
                     new_string = l.strip()
@@ -141,6 +142,7 @@ class Main(QWidget):
             self.update_todo()
 
         self.row_list = []
+        # 참고 https://zephyrus1111.tistory.com/106
     
     # 완료
     def complete(self):

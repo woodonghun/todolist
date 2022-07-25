@@ -4,7 +4,7 @@ from PySide2.QtWidgets import QWidget, QDialog, QPushButton, QAbstractItemView, 
     QCheckBox
 
 import widget.funtion
-import widget.title_cont
+import widget.title_cont_com
 
 class Complete(QWidget):
     def __init__(self):
@@ -68,9 +68,9 @@ class Complete(QWidget):
             for i, l in enumerate(lines):
                 if i == self.row_list[p] * 3:
                     new_string = ''
-                elif i == self.row_list[p] * 3 + 2:
-                    new_string = ''
                 elif i == self.row_list[p] * 3 + 1:
+                    new_string = ''
+                elif i == self.row_list[p] * 3 + 2:
                     new_string = ''
                 elif i == self.row_list[p] * 3 + 3:
                     new_string = ''
@@ -107,11 +107,13 @@ class Complete(QWidget):
         txt.close()
 
     def content_widget(self):
-        title_con = widget.title_cont.Title_Cont
+        title_con = widget.title_cont_com.Title_Cont_Com
         function = widget.funtion.Function
+        function.complete_todo(self, 4)
         aa = self.table.selectedIndexes()
         function.setting.number = aa[0].row()
         if self.table.rowCount() - 1 != aa[0].row():
+            function.complete_todo(self, 4)
             title_con()
         else:
             pass
