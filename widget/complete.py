@@ -4,7 +4,7 @@ from PySide2.QtWidgets import QWidget, QDialog, QPushButton, QAbstractItemView, 
     QCheckBox
 
 import widget.funtion
-import widget.title_cont_com
+import widget.title_cont
 
 class Complete(QWidget):
     def __init__(self):
@@ -15,12 +15,9 @@ class Complete(QWidget):
 
     def initUI(self):
         self.row_list = []
-        txt = open("C:/woo_project/todolist/widget/finish.txt", 'r')
-        self.content = txt.read()
-        self.content_list = self.content.split('\n')
-        self.content_chunk = [self.content_list[i * 4:(i + 1) * 4] for i in
-                              range((len(self.content_list) + 4 - 1) // 4)]
-        txt.close()
+        function = widget.funtion.Function
+
+        function.complete_todo(self, 4)
 
         self.table = QTableWidget(len(self.content_chunk), 4, self.dialog)
 
@@ -59,6 +56,7 @@ class Complete(QWidget):
         self.dialog.exec()
 
     def delete(self):       # 삭제
+        function = widget.funtion.Function
         new_text_content = ''
 
         for p in range(len(self.row_list)):
@@ -87,7 +85,7 @@ class Complete(QWidget):
             txt.write(new_text_content)
             txt.close()
             new_text_content = ''
-            self.update_todo()
+            function.complete_todo(self, 4)
 
         self.row_list = []
 
@@ -99,24 +97,13 @@ class Complete(QWidget):
         self.row_list.sort()
         self.row_list.reverse()
 
-    def update_todo(self):
-        txt = open("C:/woo_project/todolist/widget/finish.txt", 'r')
-        self.content = txt.read()
-        self.content_list = self.content.split('\n')
-        self.content_chunk = [self.content_list[i * 4:(i + 1) * 4] for i in range((len(self.content_list) + 4 - 1) // 4)]
-        txt.close()
-
     def content_widget(self):
-        title_con = widget.title_cont_com.Title_Cont_Com
+        title_con = widget.title_cont.Title_Cont_Com
         function = widget.funtion.Function
-        function.complete_todo(self, 4)
         aa = self.table.selectedIndexes()
         function.setting.number = aa[0].row()
         if self.table.rowCount() - 1 != aa[0].row():
-            function.complete_todo(self, 4)
             title_con()
-        else:
-            pass
 
     def dialog_close(self):
         self.dialog.close()

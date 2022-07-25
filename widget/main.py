@@ -4,7 +4,6 @@ from PySide2 import QtWidgets, QtCore
 from PySide2.QtCore import Qt
 
 import widget.funtion
-import widget.edit
 import widget.todo
 import widget.complete
 import widget.title_cont
@@ -18,17 +17,19 @@ class Main(QWidget):
 
     def __init__(self):
         super().__init__()
-        self.update_todo()
         self.initUI()
 
     def initUI(self):
+        function = widget.funtion.Function
+        function.update_todo(self, 3)
+
         txt = open("C:/woo_project/todolist/widget/content.txt", 'r')
         self.value = txt.read()
         txt.close()
 
         self.row_list = []      # 초기 리스트 행 값 저장
         todo = widget.todo.Todo
-        edit = widget.edit.Edit
+        edit = widget.todo.Edit
         complete = widget.complete.Complete
 
         # main UI
@@ -169,21 +170,16 @@ class Main(QWidget):
         title_con = widget.title_cont.Title_Cont
         function = widget.funtion.Function
         aa = self.table.selectedIndexes()
-        function.setting.number = aa[0].row()
-        if self.table.rowCount()-1 != aa[0].row():      # 마지막 줄 값이랑 다를때만 출력
-            title_con()
 
-    # content에 적혀있는거 업데이트 개념?
-    def update_todo(self):
-        txt = open("C:/woo_project/todolist/widget/content.txt", 'r')
-        self.content = txt.read()
-        self.content_list = self.content.split('\n')
-        self.content_chunk = [self.content_list[i * 3:(i + 1) * 3] for i in range((len(self.content_list) + 3 - 1) // 3)]
-        txt.close()
+        function.setting.number = aa[0].row()
+        print(aa[0].row()) # 행값 저장
+        if self.table.rowCount()-1 != aa[0].row():      # 마지막 행 값이랑 다를때만 출력
+            title_con()
 
     # 내용 수정
     def edit_content(self):
-        self.update_todo()
+        function = widget.funtion.Function
+        function.update_todo(self, 3)
         for i in range(len(self.content_chunk)-1):      # 내용 확인후 테이블에 버튼, 체크박스 등록
             self.table.setItem(i, 1, QTableWidgetItem(self.content_chunk[i][2]))
             self.table.setItem(i, 2, QTableWidgetItem(self.content_chunk[i][0]))
@@ -196,7 +192,8 @@ class Main(QWidget):
     # 추가
     def add_content(self):      # 내용 추가, 버튼 추가, 줄 추가,
         edit = widget.edit.Edit
-        self.update_todo()
+        function = widget.funtion.Function
+        function.update_todo(self, 3)
 
         if self.value != self.content:      # 처음 값과 추가된 값이 달라야 add 추가 안하면 그냥 꺼도 줄이 추가됨
             line = len(self.content_chunk)-2    # 빈줄 1칸 있어서 -2 해야됨

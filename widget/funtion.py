@@ -1,4 +1,4 @@
-class Function():
+class Function:
     def update_todo(self, n):
         txt = open("C:/woo_project/todolist/widget/content.txt", 'r')
         self.content = txt.read()

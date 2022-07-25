@@ -14,8 +14,7 @@ class Title_Cont(QWidget):
     def initUI(self):
         function = widget.funtion.Function
         row = function.setting.number  # 저장된 행 값 출력
-
-        function.update_todo(self, 3)
+        self.update()
 
         edt_title = QLabel(self.dialog)
         edt_title.setText(self.content_chunk[row][0])
@@ -58,5 +57,18 @@ class Title_Cont(QWidget):
 
         self.dialog.exec()
 
+    def update(self):
+        function = widget.funtion.Function
+        function.update_todo(self, 3)
+
     def dialog_close(self):
         self.dialog.close()
+
+
+class Title_Cont_Com(Title_Cont):
+    def __init__(self):
+        super().__init__()
+
+    def update(self):
+        function = widget.funtion.Function
+        function.complete_todo(self, 4)

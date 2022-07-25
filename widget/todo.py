@@ -15,9 +15,7 @@ class Todo(QWidget):
         self.dialog_close()
 
     def initUI(self):
-        now = datetime.datetime.now()
-        nowDatetime = now.strftime('%Y-%m-%d %H:%M:%S')  # 현재 시간
-        self.dates = nowDatetime
+        self.todo()
 
         date = widget.calendar.Calendar
 
@@ -33,10 +31,12 @@ class Todo(QWidget):
         btn_save.move(250, 180)
 
         self.edt_title = QLineEdit(self.dialog)
+        self.edt_title.setText(self.title)
         self.edt_title.setGeometry(35, 10, 300, 30)
 
         self.edt_contents = QPlainTextEdit(self.dialog)     # QPlainTextEdit은 QLineEdit과 다르게 스타일은 바꿀수 없지만 줄은 바꿀 수 있다.
-        self.edt_contents.setGeometry(35, 50, 300, 90)      # ui 이쁘게 안하면 더 많이 사용할 것 같음
+        self.edt_contents.setPlainText(self.contents)        # ui 이쁘게 안하면 더 많이 사용할 것 같음
+        self.edt_contents.setGeometry(35, 50, 300, 90)
 
         self.label_time_set = QLabel(self.dialog)
         self.label_time_set.setText(self.dates)
@@ -88,3 +88,64 @@ class Todo(QWidget):
 
     def dialog_close(self):
         self.dialog.close()
+
+    def todo(self):
+        now = datetime.datetime.now()
+        nowDatetime = now.strftime('%Y-%m-%d %H:%M:%S')  # 현재 시간
+
+        self.dates = nowDatetime
+        self.title = ''
+        self.contents = ''
+
+
+class Edit(Todo):
+    def __init__(self):
+        super().__init__()
+
+    def btn_clicked(self):
+        if self.edt_title.text() != '':
+            number = widget.funtion.Function.setting.number
+            txt = open("C:/woo_project/todolist/widget/content.txt", 'r')
+            title = self.edt_title.text()
+            contents = self.edt_contents.toPlainText()
+            time = self.label_time_set.text()
+
+            new_text_content = ''
+            lines = txt.readlines()
+            for i, l in enumerate(lines):
+                if i == number * 3:
+                    new_string = title
+                elif i == number * 3 + 2:
+                    new_string = time
+                elif i == number * 3 + 1:
+                    new_string = contents
+                else:
+                    new_string = l.strip()
+                if new_string:
+                    new_text_content += new_string + '\n'
+                else:
+                    new_text_content += '\n'
+            txt.close()
+
+            txt = open("C:/woo_project/todolist/widget/content.txt", 'w')
+            txt.write(new_text_content)
+            txt.close()
+
+            self.dialog_close()
+        else:
+            signBox = QMessageBox()
+            signBox.setWindowTitle("Warning")
+            signBox.setText('제목을 입력하세요')
+
+            signBox.setIcon(QMessageBox.Information)
+            signBox.setStandardButtons(QMessageBox.Ok)
+            signBox.exec_()
+
+    def todo(self):
+        funtion = widget.funtion.Function
+        funtion.update_todo(self, 3)
+
+        self.title = self.content_chunk[funtion.setting.number][0]
+        self.contents = self.content_chunk[funtion.setting.number][1]
+        self.dates = self.content_chunk[funtion.setting.number][2]
+        print(self.title)
